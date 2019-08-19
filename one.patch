@@ -1,0 +1,503 @@
+Index: TheMealRestaurant/app/src/main/java/id/web/themealrestaurant/CategorySatu.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- TheMealRestaurant/app/src/main/java/id/web/themealrestaurant/CategorySatu.java	(date 1566196671085)
++++ TheMealRestaurant/app/src/main/java/id/web/themealrestaurant/CategorySatu.java	(date 1566196671085)
+@@ -0,0 +1,4 @@
++package id.web.themealrestaurant;
++
++public class CategorySatu {
++}
+Index: TheMealRestaurant/app/src/main/java/id/web/themealrestaurant/Adapters/ListCategoryAdapter.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- TheMealRestaurant/app/src/main/java/id/web/themealrestaurant/Adapters/ListCategoryAdapter.java	(date 1566207713368)
++++ TheMealRestaurant/app/src/main/java/id/web/themealrestaurant/Adapters/ListCategoryAdapter.java	(date 1566207713368)
+@@ -0,0 +1,56 @@
++package id.web.themealrestaurant.Adapters;
++
++import android.view.LayoutInflater;
++import android.view.View;
++import android.view.ViewGroup;
++import android.widget.ImageView;
++
++import androidx.annotation.NonNull;
++import androidx.recyclerview.widget.RecyclerView;
++
++import com.bumptech.glide.Glide;
++import com.bumptech.glide.request.RequestOptions;
++
++import java.util.ArrayList;
++
++import id.web.themealrestaurant.R;
++import id.web.themealrestaurant.object.Category;
++
++public class ListCategoryAdapter  extends RecyclerView.Adapter<ListCategoryAdapter.ListViewHolder>{
++    private ArrayList<Category> listCategory;
++    public ListCategoryAdapter(ArrayList<Category> list) {
++        this.listCategory = list;
++    }
++
++    @NonNull
++    @Override
++    public ListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
++        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_row_categorymenu, viewGroup, false);
++        return new ListViewHolder(view);
++    }
++
++    @Override
++    public void onBindViewHolder(@NonNull ListViewHolder holder, int position) {
++        Category category = listCategory.get(position);
++
++        Glide.with(holder.itemView.getContext())
++                .load(category.getPhoto())
++                .apply(new RequestOptions().override(55, 55))
++                .into(holder.imgP);
++        holder.tvName.setText(category.getName());
++        holder.tvFrom.setText(category.getDescription());
++    }
++
++    @Override
++    public int getItemCount() {
++        return listCategory.size();
++
++        ImageView
++    }
++
++    public class ListViewHolder extends RecyclerView.ViewHolder {
++        public ListViewHolder(@NonNull View itemView) {
++            super(itemView);
++        }
++    }
++}
+Index: TheMealRestaurant/app/src/main/java/id/web/themealrestaurant/object/Category.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- TheMealRestaurant/app/src/main/java/id/web/themealrestaurant/object/Category.java	(date 1566205140762)
++++ TheMealRestaurant/app/src/main/java/id/web/themealrestaurant/object/Category.java	(date 1566205140762)
+@@ -0,0 +1,36 @@
++package id.web.themealrestaurant.object;
++
++public class Category {
++    private String name, description, photo;
++
++    public Category(String name, String description, String photo) {
++        this.name = name;
++        this.description = description;
++        this.photo = photo;
++    }
++
++    public String getName() {
++        return name;
++    }
++
++    public void setName(String name) {
++        this.name = name;
++    }
++
++    public String getDescription() {
++        return description;
++    }
++
++    public void setDescription(String description) {
++        this.description = description;
++    }
++
++    public String getPhoto() {
++        return photo;
++    }
++
++    public void setPhoto(String photo) {
++        this.photo = photo;
++    }
++}
++
+Index: TheMealRestaurant/app/src/main/java/id/web/themealrestaurant/AppController.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- TheMealRestaurant/app/src/main/java/id/web/themealrestaurant/AppController.java	(date 1566200087937)
++++ TheMealRestaurant/app/src/main/java/id/web/themealrestaurant/AppController.java	(date 1566200087937)
+@@ -0,0 +1,43 @@
++package id.web.themealrestaurant;
++
++import android.app.Application;
++import android.text.TextUtils;
++
++import com.android.volley.Request;
++import com.android.volley.RequestQueue;
++import com.android.volley.toolbox.Volley;
++
++public class AppController extends Application  {
++    public static final String TAG = AppController.class.getSimpleName();
++    private RequestQueue mRequestQueue;
++    private static AppController mInstance;
++
++    @Override
++    public void onCreate() {
++        super.onCreate();
++        mInstance = this;
++    }
++    public static synchronized AppController getInstance() {
++        return mInstance;
++    }
++    public RequestQueue getRequestQueue() {
++        if (mRequestQueue == null) {
++            mRequestQueue = Volley.newRequestQueue(getApplicationContext());
++        }
++        return mRequestQueue;
++    }
++    public <T> void addToRequestQueue(Request<T> req, String tag) {
++        req.setTag(TextUtils.isEmpty(tag) ? TAG : tag);
++        getRequestQueue().add(req);
++    }
++    public <T> void addToRequestQueue(Request<T> req) {
++        req.setTag(TAG);
++        getRequestQueue().add(req);
++    }
++    public void cancelPendingRequests(Object tag) {
++        if (mRequestQueue != null) {
++        }
++        mRequestQueue.cancelAll(tag);
++    }
++}
++
+Index: TheMealRestaurant/app/src/main/res/layout/item_row_categorymenu.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- TheMealRestaurant/app/src/main/res/layout/item_row_categorymenu.xml	(date 1566207970001)
++++ TheMealRestaurant/app/src/main/res/layout/item_row_categorymenu.xml	(date 1566207970001)
+@@ -0,0 +1,104 @@
++<?xml version="1.0" encoding="utf-8"?>
++<LinearLayout
++    xmlns:android="http://schemas.android.com/apk/res/android"
++    xmlns:tools="http://schemas.android.com/tools"
++    xmlns:app="http://schemas.android.com/apk/res-auto"
++    android:layout_width="match_parent"
++    android:layout_height="wrap_content"
++    android:id="@+id/category_item"
++    android:orientation="horizontal">
++
++    <android.support.v7.widget.CardView
++        android:id="@+id/card_view"
++        android:layout_width="match_parent"
++        android:layout_height="wrap_content"
++        android:layout_margin="5dp"
++        app:cardCornerRadius="5dp">
++
++        <LinearLayout
++            android:layout_width="wrap_content"
++            android:layout_height="wrap_content"
++            android:orientation="horizontal">
++
++            <de.hdodenhof.circleimageview.CircleImageView
++                android:id="@+id/iv"
++                android:layout_width="100dp"
++                android:layout_height="100dp"
++                android:layout_marginLeft="10dp"
++                android:layout_marginTop="10dp"
++                android:scaleType="fitXY" />
++
++            <LinearLayout
++                android:layout_width="wrap_content"
++                android:layout_height="100dp"
++                android:layout_marginLeft="10dp"
++                android:layout_marginTop="10dp"
++                android:orientation="vertical">
++
++                <TextView
++                    android:id="@+id/name"
++                    android:layout_width="wrap_content"
++                    android:layout_height="0dp"
++                    android:layout_marginTop="5dp"
++                    android:layout_weight="1"
++                    android:text="ddd"
++                    android:textColor="#000"
++                    android:textStyle="bold" />
++
++                <TextView
++                    android:id="@+id/descrip"
++                    android:layout_width="wrap_content"
++                    android:layout_height="0dp"
++                    android:layout_weight="1"
++                    android:text="ddd"
++                    android:textColor="#000"
++                    android:textStyle="bold" />
++
++            </LinearLayout>
++        </LinearLayout>
++
++    </android.support.v7.widget.CardView>
++
++    <!--<android.support.v7.widget.CardView-->
++        <!--android:id="@+id/card_view"-->
++        <!--android:layout_width="match_parent"-->
++        <!--android:layout_height="wrap_content"-->
++        <!--android:layout_margin="5dp"-->
++        <!--app:cardCornerRadius="5dp">-->
++        <!--<LinearLayout-->
++            <!--android:layout_width="wrap_content"-->
++            <!--android:layout_height="wrap_content"-->
++            <!--android:orientation="horizontal">-->
++    <!--<de.hdodenhof.circleimageview.CircleImageView-->
++        <!--android:id="@+id/img_item_photo"-->
++        <!--android:layout_width="55dp"-->
++        <!--android:layout_height="55dp"-->
++        <!--android:layout_margin="5dp"-->
++        <!--tools:src="@android:color/darker_gray" />-->
++        <!--<LinearLayout-->
++            <!--android:layout_width="match_parent"-->
++            <!--android:layout_height="wrap_content"-->
++            <!--android:layout_centerVertical="true"-->
++            <!--android:padding="5dp"-->
++            <!--android:layout_toEndOf="@id/img_item_photo"-->
++            <!--android:layout_toRightOf="@id/img_item_photo"-->
++            <!--android:orientation="vertical">-->
++            <!--<TextView-->
++                <!--android:id="@+id/tv_item_name"-->
++                <!--android:layout_width="match_parent"-->
++                <!--android:layout_height="wrap_content"-->
++                <!--android:layout_marginBottom="8dp"-->
++                <!--android:textSize="16sp"-->
++                <!--android:textStyle="bold"-->
++                <!--tools:text="category_name" />-->
++            <!--<TextView-->
++                <!--android:id="@+id/tv_item_des"-->
++                <!--android:layout_width="match_parent"-->
++                <!--android:layout_height="wrap_content"-->
++                <!--android:ellipsize="end"-->
++                <!--android:maxLines="2"-->
++                <!--tools:text="description" />-->
++            <!--</LinearLayout>-->
++        <!--</LinearLayout>-->
++    <!--</android.support.v7.widget.CardView>-->
++</LinearLayout>
+\ No newline at end of file
+Index: TheMealRestaurant/app/src/main/res/layout/activity_dashboard.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- TheMealRestaurant/app/src/main/res/layout/activity_dashboard.xml	(date 1566205041172)
++++ TheMealRestaurant/app/src/main/res/layout/activity_dashboard.xml	(date 1566205041172)
+@@ -0,0 +1,60 @@
++<?xml version="1.0" encoding="utf-8"?>
++<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
++    xmlns:app="http://schemas.android.com/apk/res-auto"
++    xmlns:tools="http://schemas.android.com/tools"
++    android:layout_width="match_parent"
++    android:layout_height="match_parent"
++    android:background="@color/brown_100"
++    android:fitsSystemWindows="true"
++    android:orientation="vertical"
++    tools:context=".Dashboard">
++
++    <LinearLayout
++        android:layout_width="match_parent"
++        android:layout_height="150dp"
++        android:background="@color/brown_50"
++        android:gravity="center"
++        android:orientation="vertical">
++
++        <ImageView
++          android:layout_width="100dp"
++          android:layout_height="100dp"
++          android:src="@drawable/lg"/>
++        <TextView
++          android:layout_width="wrap_content"
++          android:layout_height="wrap_content"
++            android:gravity="center"
++            android:textStyle="bold"
++            android:textColor="@color/brown_800"
++          android:text="Welcome To\nThe Meal Restaurant"/>
++
++        <View
++            android:layout_width="match_parent"
++            android:layout_height="5dp"
++            android:layout_marginLeft="5dp"
++            android:layout_marginRight="5dp"
++            android:background="@color/brown_800"/>
++    </LinearLayout>
++
++    <TextView
++        android:layout_width="match_parent"
++        android:layout_height="wrap_content"
++        android:textColor="@color/brown_800"
++        android:layout_margin="5dp"
++        android:textStyle="italic"
++        android:text="Please, choose the menu category "/>
++
++    <ScrollView
++        android:layout_width="match_parent"
++        android:layout_height="match_parent">
++        <LinearLayout
++            android:layout_width="match_parent"
++            android:layout_height="wrap_content">
++
++            <android.support.v7.widget.RecyclerView
++                android:id="@+id/dataCategory"
++                android:layout_width="435dp"
++                android:layout_height="544dp" />
++        </LinearLayout>
++    </ScrollView>
++</LinearLayout>
+\ No newline at end of file
+Index: TheMealRestaurant/app/src/main/java/id/web/themealrestaurant/Dashboard.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- TheMealRestaurant/app/src/main/java/id/web/themealrestaurant/Dashboard.java	(date 1566204856375)
++++ TheMealRestaurant/app/src/main/java/id/web/themealrestaurant/Dashboard.java	(date 1566204856375)
+@@ -0,0 +1,142 @@
++package id.web.themealrestaurant;
++
++import androidx.appcompat.app.AppCompatActivity;
++import androidx.recyclerview.widget.LinearLayoutManager;
++import androidx.recyclerview.widget.RecyclerView;
++
++import android.app.ProgressDialog;
++import android.content.Context;
++import android.os.Bundle;
++import android.util.Log;
++
++import com.android.volley.Cache;
++import com.android.volley.NetworkResponse;
++import com.android.volley.ParseError;
++import com.android.volley.Request;
++import com.android.volley.Response;
++import com.android.volley.VolleyError;
++import com.android.volley.VolleyLog;
++import com.android.volley.toolbox.HttpHeaderParser;
++import com.android.volley.toolbox.JsonArrayRequest;
++
++import org.json.JSONArray;
++import org.json.JSONException;
++import org.json.JSONObject;
++
++import java.io.UnsupportedEncodingException;
++import java.util.ArrayList;
++
++public class Dashboard extends AppCompatActivity {
++    RecyclerView dataCategory;
++
++    @Override
++    protected void onCreate(Bundle savedInstanceState) {
++        super.onCreate(savedInstanceState);
++        setContentView(R.layout.activity_dashboard);
++
++        dataCategory = (RecyclerView) findViewById(R.id.dataCategory);
++    }
++
++    public void getData(){
++
++        final ProgressDialog progressDialog = new ProgressDialog(this);
++        progressDialog.setMessage("Sedang Mengambil Data...");
++        progressDialog.show();
++        String url;
++        url = "https://www.themealdb.com/api/json/v1/1/categories.php";
++        JsonArrayRequest jsonObjReq = new JsonArrayRequest(Request.Method.GET,
++                url, new Response.Listener<JSONArray>() {
++            @Override
++            public void onResponse(JSONArray response) {
++                Log.d("DEBUGS", response.toString());
++                try {
++                    dataCategory = new ArrayList<Data>();
++                    for (int i=0; i<response.length();i++){
++                        JSONObject object = response.getJSONObject(i);
++                        String tanggal =object.getString("tanggal");
++                        String jam = object.getString("jam");
++                        String instansi = object.getString("instance");
++                        String kabupaten = object.getString("kab_kota");
++                        String tujuan = object.getString("tujuan_kegiatan");
++                        String planKeja = object.getString("rencana_kegiatan");
++
++                        data.add(new DataLaporan(tanggal,instansi, kabupaten, tujuan, jam, planKeja));
++//                        data.add(new DataLaporan(tanggal,instansi, kabupaten, tujuan));
++
++                        //menambah data ke recycleview
++                        LinearLayoutManager layoutManager= new
++                                LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL,
++                                false);
++                        dataLaporan.setHasFixedSize(true);
++                        dataLaporan.setLayoutManager(layoutManager);
++                        adapter = new
++                                ListLaporan2Adapter(getApplicationContext(), data);
++                        adapter.notifyDataSetChanged();
++                        progressDialog.dismiss();
++                        dataLaporan.setAdapter(adapter);
++                    }
++                } catch (JSONException e) {
++                    e.printStackTrace();
++                    progressDialog.dismiss();
++                }
++            }
++        }, new Response.ErrorListener() {
++            @Override
++            public void onErrorResponse(VolleyError error) {
++                VolleyLog.d("DEBUGS", "Error: " + error.getMessage());
++                progressDialog.dismiss();
++            }
++        }) {
++            @Override
++            protected Response<JSONArray> parseNetworkResponse(NetworkResponse response) {
++                try {
++                    Cache.Entry cacheEntry = HttpHeaderParser.parseCacheHeaders(response);
++                    if (cacheEntry == null) {
++                        cacheEntry = new Cache.Entry();
++                    }
++                    final long cacheHitButRefreshed = 0 * 60 * 1000; // in 3 minutes cache will be hit, but also refreshed on background
++                    final long cacheExpired = 24 * 60 * 60 * 1000; // in 24 hours this cache entry expires completely
++                    long now = System.currentTimeMillis();
++                    final long softExpire = now + cacheHitButRefreshed;
++                    final long ttl = now + cacheExpired;
++                    cacheEntry.data = response.data;
++                    cacheEntry.softTtl = softExpire;
++                    cacheEntry.ttl = ttl;
++                    String headerValue;
++                    headerValue = response.headers.get("Date");
++                    if (headerValue != null) {
++                        cacheEntry.serverDate = HttpHeaderParser.parseDateAsEpoch(headerValue);
++                    }
++                    headerValue = response.headers.get("Last-Modified");
++                    if (headerValue != null) {
++                        cacheEntry.lastModified = HttpHeaderParser.parseDateAsEpoch(headerValue);
++                    }
++                    cacheEntry.responseHeaders = response.headers;
++                    final String jsonString = new String(response.data,
++                            HttpHeaderParser.parseCharset(response.headers));
++                    return Response.success(new JSONArray(jsonString), cacheEntry);
++                } catch (UnsupportedEncodingException | JSONException e) {
++                    return Response.error(new ParseError(e));
++                }
++            }
++
++            @Override
++            protected void deliverResponse(JSONArray response) {
++                super.deliverResponse(response);
++            }
++
++            @Override
++            public void deliverError(VolleyError error) {
++                super.deliverError(error);
++            }
++
++            @Override
++            protected VolleyError parseNetworkError(VolleyError volleyError) {
++                return super.parseNetworkError(volleyError);
++            }
++        };
++
++// Adding request to request queue
++        AppController.getInstance().addToRequestQueue(jsonObjReq);
++    }
++}
