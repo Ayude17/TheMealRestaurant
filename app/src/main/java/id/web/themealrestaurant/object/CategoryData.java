@@ -30,7 +30,7 @@ public class CategoryData {
                     "https://www.themealdb.com/images/category/seafood.png"},
             {"Side",
                     "A side dish, sometimes referred to as a side order, side item, or simply a side, is a food item that accompanies the entrée or main course at a meal. Side dishes such as salad, potatoes and bread are commonly used with main courses throughout many countries of the western world. New side orders introduced within the past decade[citation needed], such as rice and couscous, have grown to be quite popular throughout Europe, especially at formal occasions (with couscous appearing more commonly at dinner parties with Middle Eastern dishes).",
-                    "ttps://www.themealdb.com/images/category/side.png"},
+                    "https://www.themealdb.com/images/category/side.png"},
             {"Starter",
                     "n entrée (/ˈɑːntreɪ/ /ˈɒntreɪ/ AHN-tray; French: [ɑ̃tʁe]) in modern French table service and that of much of the English-speaking world (apart from the United States and parts of Canada) is a dish served before the main course of a meal; it may be the first dish served, or it may follow a soup or other small dish or dishes. In the United States and parts of Canada, an entrée is the main dish or the only dish of a meal.\\r\\n\\r\\nHistorically, the entrée was one of the stages of the “Classical Order” of formal French table service of the 18th and 19th centuries. It formed a part of the “first service” of the meal, which consisted of potage, hors d’œuvre, and entrée (including the bouilli and relevé). The “second service” consisted of roast (rôti), salad, and entremets (the entremets sometimes being separated into a “third service” of their own). The final service consisted only of dessert.",
                     "https://www.themealdb.com/images/category/starter.png"},
@@ -44,7 +44,7 @@ public class CategoryData {
     public static ArrayList<Category> getCategorytData(){
         ArrayList<Category> list = new ArrayList<>();
         for (String[] aData : data) {
-            Category category = new Category;
+            Category category = new Category();
             category.setName(aData[0]);
             category.setDescription(aData[1]);
             category.setPhoto(aData[2]);

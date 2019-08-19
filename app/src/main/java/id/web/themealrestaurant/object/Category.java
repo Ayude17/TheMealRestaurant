@@ -3,11 +3,11 @@ package id.web.themealrestaurant.object;
 public class Category {
     private String name, description, photo;
 
-    public Category(String name, String description, String photo) {
-        this.name = name;
-        this.description = description;
-        this.photo = photo;
-    }
+//    public Category(String name, String description, String photo) {
+//        this.name = name;
+//        this.description = description;
+//        this.photo = photo;
+//    }
 
     public String getName() {
         return name;

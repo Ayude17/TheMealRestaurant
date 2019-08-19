@@ -4,6 +4,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,40 +18,45 @@ import id.web.themealrestaurant.R;
 import id.web.themealrestaurant.object.Category;
 
 public class ListCategoryAdapter  extends RecyclerView.Adapter<ListCategoryAdapter.ListViewHolder>{
-    private ArrayList<Category> listCategory;
-    public ListCategoryAdapter(ArrayList<Category> list) {
+    private ArrayList<Category>listCategory;
+
+
+    public ListCategoryAdapter(ArrayList<Category>list) {
         this.listCategory = list;
     }
 
     @NonNull
     @Override
-    public ListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ListViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_row_categorymenu, viewGroup, false);
         return new ListViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ListViewHolder holder, int position) {
-        Category category = listCategory.get(position);
-
+        Category hero = listCategory.get(position);
         Glide.with(holder.itemView.getContext())
-                .load(category.getPhoto())
+                .load(hero.getPhoto())
                 .apply(new RequestOptions().override(55, 55))
-                .into(holder.imgP);
-        holder.tvName.setText(category.getName());
-        holder.tvFrom.setText(category.getDescription());
+                .into(holder.imgPhoto);
+        holder.tvName.setText(hero.getName());
+        holder.tvDescription.setText(hero.getDescription());
     }
 
     @Override
     public int getItemCount() {
         return listCategory.size();
-
-        ImageView
     }
 
     public class ListViewHolder extends RecyclerView.ViewHolder {
-        public ListViewHolder(@NonNull View itemView) {
+        ImageView imgPhoto;
+        TextView tvName, tvDescription;
+
+        ListViewHolder(View itemView) {
             super(itemView);
+            imgPhoto = itemView.findViewById(R.id.img_item_photo);
+            tvName = itemView.findViewById(R.id.tv_item_name);
+            tvDescription = itemView.findViewById(R.id.tv_item_des);
         }
     }
 }
