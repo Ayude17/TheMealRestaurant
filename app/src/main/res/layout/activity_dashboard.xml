@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/brown_100"
+    android:background="#795548"
     android:fitsSystemWindows="true"
     android:orientation="vertical"
     tools:context=".Dashboard">
@@ -26,30 +26,32 @@
             android:gravity="center"
             android:textStyle="bold"
             android:textColor="@color/brown_800"
+            android:textSize="17sp"
           android:text="Welcome To\nThe Meal Restaurant"/>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="5dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
             android:background="@color/brown_800"/>
     </LinearLayout>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/brown_800"
+        android:textColor="@color/brown_200"
         android:layout_margin="5dp"
-        android:textStyle="italic"
-        android:text="Please, choose the menu category "/>
+        android:textStyle="italic|bold"
+        android:gravity="center"
+        android:textSize="15dp"
+        android:text="Please, choose the menu category"/>
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp">
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/dataCategory"
                 android:layout_width="match_parent"
